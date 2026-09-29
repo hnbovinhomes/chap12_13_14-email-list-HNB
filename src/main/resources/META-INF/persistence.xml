@@ -14,13 +14,13 @@
             <!-- Driver kết nối PostgreSQL -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 
-            <!-- JDBC URL lấy từ biến DATABASE_PUBLIC_URL trên Railway -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://altaria.proxy.rlwy.net:41964/railway"/>
+            <!-- JDBC URL đã thêm tham số ?sslmode=require để qua được tường lửa public của Railway -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://altaria.proxy.rlwy.net:41964/railway?sslmode=require"/>
 
-            <!-- Username lấy từ PGUSER / POSTGRES_USER -->
+            <!-- Username -->
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
 
-            <!-- Password lấy từ PGPASSWORD / POSTGRES_PASSWORD -->
+            <!-- Password -->
             <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHlGKTGTCRzguZnmlkzqm"/>
 
             <!-- Cấu hình tùy chọn tự động cập nhật bảng -->
