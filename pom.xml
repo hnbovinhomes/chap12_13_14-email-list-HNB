@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>chap12_ex1</artifactId>
+    <groupId>murach</groupId>
+    <artifactId>chap12_13_14-email-list</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>chap12_ex1</name>
-
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.target>17</maven.compiler.target>
         <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -26,22 +24,14 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Jakarta Server Pages (JSP) API -->
-        <dependency>
-            <groupId>jakarta.servlet.jsp</groupId>
-            <artifactId>jakarta.servlet.jsp-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- JPA API (Jakarta Persistence) -->
+        <!-- Jakarta Persistence API (JPA) -->
         <dependency>
             <groupId>jakarta.persistence</groupId>
             <artifactId>jakarta.persistence-api</artifactId>
             <version>3.1.0</version>
         </dependency>
 
-        <!-- EclipseLink (JPA Provider) -->
+        <!-- EclipseLink JPA Provider -->
         <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>org.eclipse.persistence.jpa</artifactId>
@@ -55,15 +45,16 @@
             <version>42.7.2</version>
         </dependency>
 
-        <!-- JavaMail / Jakarta Mail API (Chapter 14) -->
+        <!-- Jakarta Mail API (Gửi email tự động) -->
         <dependency>
-            <groupId>com.sun.mail</groupId>
+            <groupId>org.eclipse.angus</groupId>
             <artifactId>jakarta.mail</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
         </dependency>
     </dependencies>
 
     <build>
+        <finalName>emailList</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

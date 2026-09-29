@@ -1,16 +1,17 @@
-package murach.email;
+package controllers;
 
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
+
+import java.io.IOException;
 
 import murach.business.User;
 import murach.db.UserDB;
-import murach.util.MailUtilLocal;
+import murach.util.MailUtil;
 
 @WebServlet("/emailList")
 public class EmailListServlet extends HttpServlet {
@@ -19,57 +20,69 @@ public class EmailListServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         String url = "/index.jsp";
 
-        // Lấy giá trị tham số 'action' từ request (Chương 12)
+        // Lấy action từ form
         String action = request.getParameter("action");
         if (action == null) {
             action = "join";  // Hành động mặc định
         }
 
-        // Xử lý các hành động
+        // Xử lý các action
         if (action.equals("join")) {
-            url = "/index.jsp";    // Trang nhập thông tin đăng ký
+            url = "/index.jsp";    // Trang nhập form
         }
         else if (action.equals("add")) {
-            // 1. Nhận dữ liệu từ form
+            // 1. Lấy dữ liệu từ form HTML
             String firstName = request.getParameter("firstName");
             String lastName = request.getParameter("lastName");
             String email = request.getParameter("email");
 
-            // 2. Tạo đối tượng User và gắn dữ liệu
+            // 2. Tạo đối tượng User
             User user = new User();
-            user.setEmail(email);
             user.setFirstName(firstName);
             user.setLastName(lastName);
+            user.setEmail(email);
 
-            // 3. Lưu đối tượng User vào PostgreSQL bằng JPA (Chương 13)
-            UserDB.insert(user);
+            String message;
+            if (firstName == null || lastName == null || email == null ||
+                    firstName.isEmpty() || lastName.isEmpty() || email.isEmpty()) {
 
-            // 4. Gửi email xác nhận tự động qua Jakarta Mail (Chương 14)
-            String to = email;
-            String from = "your_email@gmail.com"; // Địa chỉ email gửi của bạn
-            String subject = "Welcome to our Email List";
-            String body = "Dear " + firstName + ",\n\n" +
-                    "Thanks for joining our email list. We'll send you " +
-                    "notifications of new releases.\n\n" +
-                    "Have a great day!";
-            boolean isHtml = false;
+                message = "Vui lòng điền đầy đủ tất cả các trường thông tin.";
+                url = "/index.jsp";
+            }
+            else {
+                message = "";
 
-            try {
-                MailUtilLocal.sendMail(to, from, subject, body, isHtml);
-            } catch (MessagingException e) {
-                String message = "Unable to send email. Error: " + e.getMessage();
-                this.log(message); // Ghi log vào file log của Tomcat
-                e.printStackTrace();
+                // 3. Lưu thông tin người dùng vào PostgreSQL
+                UserDB.insert(user);
+
+                // 4. Gửi email xác nhận tự động cho người dùng
+                try {
+                    String subject = "Xác nhận đăng ký nhận tin thành công";
+                    String body = "Xin chào " + user.getFirstName() + " " + user.getLastName() + ",\n\n"
+                            + "Cảm ơn bạn đã đăng ký tham gia danh sách email của chúng tôi!\n"
+                            + "Thông tin đăng ký của bạn đã được ghi nhận trên hệ thống.\n\n"
+                            + "Trân trọng,\nEmail List Team";
+
+                    MailUtil.sendMail(user.getEmail(), subject, body);
+                } catch (Exception e) {
+                    // In lỗi ra log console nếu gửi mail gặp sự cố (như sai App Password)
+                    System.err.println("Lỗi khi gửi email: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+                url = "/thanks.jsp";
             }
 
-            // 5. Lưu thông tin user vào request object để hiển thị ở thanks.jsp
             request.setAttribute("user", user);
-            url = "/thanks.jsp";
+            request.setAttribute("message", message);
         }
 
-        // Chuyển tiếp (forward) request và response đến trang JSP thích hợp (Chương 12)
+        // Chuyển hướng render view tương ứng
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
