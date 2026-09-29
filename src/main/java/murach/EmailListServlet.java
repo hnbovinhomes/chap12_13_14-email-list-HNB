@@ -68,8 +68,7 @@ public class EmailListServlet extends HttpServlet {
                             + "Thông tin đăng ký của bạn đã được ghi nhận trên hệ thống.\n\n"
                             + "Trân trọng,\nEmail List Team";
 
-                    MailUtil.sendMail(user.getEmail(), subject, body);
-                } catch (Exception e) {
+                    MailUtil.sendMail(user.getEmail(), "baooha9600@gmail.com", subject, body, false);                } catch (Exception e) {
                     // In lỗi ra log console nếu gửi mail gặp sự cố (như sai App Password)
                     System.err.println("Lỗi khi gửi email: " + e.getMessage());
                     e.printStackTrace();
