@@ -11,13 +11,15 @@
         <class>murach.business.User</class>
 
         <properties>
-            <!-- Thay đổi URL kết nối bên dưới bằng Internal Database URL của Render -->
+            <!-- Driver kết nối PostgreSQL -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://<RENDER_HOST>:<PORT>/<DATABASE_NAME>?currentSchema=public&amp;TimeZone=Asia/Ho_Chi_Minh"/>
-            <property name="jakarta.persistence.jdbc.user" value="<USER>"/>
-            <property name="jakarta.persistence.jdbc.password" value="<PASSWORD>"/>
 
-            <!-- Cấu hình tạo/cập nhật bảng tự động của EclipseLink -->
+            <!-- THAY THẾ 4 THÔNG TIN DƯỚI ĐÂY BẰNG THÔNG TIN THẬT TỪ RENDER DASHBOARD -->
+            <property name="jakarta.persistence.jdbc.url" value="dpg-datn0f3ncjis7398nfcg-a"/>
+            <property name="jakarta.persistence.jdbc.user" value="murachdb_h5ye_user"/>
+            <property name="jakarta.persistence.jdbc.password" value="murachdb_h5ye"/>
+
+            <!-- Cấu hình EclipseLink tự động tạo/cập nhật bảng -->
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
             <property name="eclipselink.logging.level" value="INFO"/>
         </properties>
