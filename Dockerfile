@@ -1,15 +1,16 @@
-# Sử dụng Tomcat chính thức chạy trên nền Java 17
-FROM tomcat:10.1-jdk17
+# --- BƯỚC 1: Build file WAR bằng Maven ---
+FROM maven:3.9-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+# Chạy lệnh Maven để build ra file WAR (bỏ qua test cho nhanh)
+RUN mvn clean package -DskipTests
 
-# Xóa các ứng dụng mặc định sẵn có của Tomcat để tránh xung đột
+# --- BƯỚC 2: Chạy trên Tomcat 10 ---
+FROM tomcat:10.1-jdk17
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# Copy file WAR sau khi build vào thư mục webapps và đổi tên thành ROOT.war
-# (Để app chạy trực tiếp ngay ở domain chính mà không cần thêm tên path)
-COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
+# Copy file WAR vừa build ở bước 1 vào thư mục webapps của Tomcat và đổi tên thành ROOT.war
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
-# Mở cổng 8080 mặc định của Tomcat
 EXPOSE 8080
-
-# Khởi động Tomcat
 CMD ["catalina.sh", "run"]
