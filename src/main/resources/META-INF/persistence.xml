@@ -2,24 +2,24 @@
 <persistence version="3.0"
              xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
-                                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
 
-    <persistence-unit name="emailListPU" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="murachPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-
         <class>murach.business.User</class>
 
         <properties>
-            <!-- Postgres Database Configuration -->
-            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/MurachDB"/>
-            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
-            <property name="jakarta.persistence.jdbc.password" value="hnb121618"/> <!-- Thay mật khẩu Postgres của bạn vào đây -->
+            <!-- Kết nối PostgreSQL trên Render -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://dpg-datn0f3ncjis7398nfcg-a.oregon-postgres.render.com:5432/murachdb_h5ye" />
+            <property name="jakarta.persistence.jdbc.user" value="murachdb_h5ye_user" />
+            <property name="jakarta.persistence.jdbc.password" value="acMnPcyR9lORQADfUixQrsZ0qumo8i1u" />
 
-            <!-- EclipseLink Properties -->
-            <property name="eclipselink.logging.level" value="FINE"/>
-            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <!-- Tự động tạo/cập nhật bảng trong DB nếu chưa có -->
+            <property name="jakarta.persistence.schema-generation.database.action" value="create" />
+
+            <!-- EclipseLink Logging -->
+            <property name="eclipselink.logging.level" value="FINE" />
         </properties>
     </persistence-unit>
 </persistence>
