@@ -6,22 +6,25 @@
 
     <persistence-unit name="emailListPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+        <!-- Khai báo Entity User của bạn -->
         <class>murach.business.User</class>
 
         <properties>
-            <!-- Driver PostgreSQL -->
-            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
+            <!-- Driver kết nối PostgreSQL -->
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 
-            <!-- Kết nối nội bộ Railway Postgres -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://postgres.railway.internal:5432/railway" />
-            <property name="jakarta.persistence.jdbc.user" value="postgres" />
-            <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHkLGKtGTCZrzgUznmlkzqm" />
+            <!-- JDBC URL lấy từ biến DATABASE_PUBLIC_URL trên Railway -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://altaria.proxy.rlwy.net:41964/railway"/>
 
-            <!-- Tự động tạo bảng User trong database -->
-            <property name="jakarta.persistence.schema-generation.database.action" value="create" />
+            <!-- Username lấy từ PGUSER / POSTGRES_USER -->
+            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
 
-            <!-- EclipseLink Logging -->
-            <property name="eclipselink.logging.level" value="FINE" />
+            <!-- Password lấy từ PGPASSWORD / POSTGRES_PASSWORD -->
+            <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHlGKTGTCRzguZnmlkzqm"/>
+
+            <!-- Cấu hình tùy chọn tự động cập nhật bảng -->
+            <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
         </properties>
     </persistence-unit>
 </persistence>
