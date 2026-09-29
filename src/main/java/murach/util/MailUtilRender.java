@@ -37,9 +37,9 @@ public class MailUtilRender {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://api.brevo.com/v3/smtp/email"))
-                    .header("accept", "application/json")
+                    .header("Accept", "application/json")
                     .header("api-key", apiKey)
-                    .header("content-type", "application/json")
+                    .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(jsonPayload))
                     .build();
 
