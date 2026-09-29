@@ -19,7 +19,7 @@
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
 
             <!-- Password -->
-            <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHlGKTGTCRzguZnmlkzqm"/>
+            <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHkLGKtGTCZrzgUznmlkzqm"/>
 
             <!-- Cấu hình tùy chọn tự động cập nhật bảng -->
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
