@@ -1,35 +1,29 @@
 package murach.util;
 
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-import jakarta.mail.Authenticator;
-import jakarta.mail.Message;
-import jakarta.mail.MessagingException;
-import jakarta.mail.PasswordAuthentication;
-import jakarta.mail.Session;
-import jakarta.mail.Transport;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 
 public class MailUtil {
 
     public static void sendMail(String to, String from, String subject, String body, boolean isHtml)
-            throws MessagingException {
+            throws MessagingException, UnsupportedEncodingException {
 
-        // 1. Cấu hình Properties cho Google SMTP Server (Port 465 SSL)
+        // 1. Cấu hình Properties cho Brevo SMTP Server (Dùng Port 587 với STARTTLS)
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "465");
+        props.put("mail.smtp.host", "smtp-relay.brevo.com");
+        props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.socketFactory.port", "465");
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.starttls.enable", "true"); // Bật STARTTLS cho cổng 587
 
-        // Thêm cấu hình timeout để tránh bị treo ứng dụng khi mạng chậm
+        // Cấu hình timeout để tránh bị treo ứng dụng khi mạng chập chờn
         props.put("mail.smtp.timeout", "10000");
         props.put("mail.smtp.connectiontimeout", "10000");
 
-        // 2. Thông tin tài khoản Gmail gửi thư
-        final String username = "baooha9600@gmail.com";
-        final String password = "mrdn kjme sevy fbtn"; // App Password 16 ký tự
+        // 2. Thông tin tài khoản SMTP từ Brevo của bạn
+        final String username = "baooha9600@gmail.com"; // Ví dụ: baooha9600@gmail.com
+        final String password = "smtp-relay.brevo.com"; // Đoạn mã SMTP key dài
 
         // 3. Tạo Session xác thực
         Session session = Session.getInstance(props, new Authenticator() {
@@ -39,12 +33,12 @@ public class MailUtil {
             }
         });
 
-        // Bật debug để xem log chi tiết khi gửi mail trên Render
+        // Bật debug để in log chi tiết nếu cần kiểm tra
         session.setDebug(true);
 
         // 4. Khởi tạo và điền thông tin Email
         Message message = new MimeMessage(session);
-        message.setFrom(new InternetAddress(from));
+        message.setFrom(new InternetAddress(username, "Email List Service", "UTF-8"));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         message.setSubject(subject);
 
