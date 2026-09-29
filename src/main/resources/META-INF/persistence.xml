@@ -2,25 +2,24 @@
 <persistence version="3.0"
              xmlns="https://jakarta.ee/xml/ns/persistence"
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+             https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
 
     <persistence-unit name="emailListPU" transaction-type="RESOURCE_LOCAL">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
-        <!-- Khai báo Entity User của bạn -->
         <class>murach.business.User</class>
 
         <properties>
-            <!-- Driver kết nối PostgreSQL -->
+            <!-- Thay đổi URL kết nối bên dưới bằng Internal Database URL của Render -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://<RENDER_HOST>:<PORT>/<DATABASE_NAME>?currentSchema=public&amp;TimeZone=Asia/Ho_Chi_Minh"/>
+            <property name="jakarta.persistence.jdbc.user" value="<USER>"/>
+            <property name="jakarta.persistence.jdbc.password" value="<PASSWORD>"/>
 
-            <!-- JDBC URL đã thêm tham số ?sslmode=require để qua được tường lửa public của Railway -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://db_host:5432/db_name?currentSchema=public&amp;TimeZone=Asia/Ho_Chi_Minh"/>
-            <!-- Password -->
-            <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHkLGKtGTCZrzgUznmlkzqm"/>
-
-            <!-- Cấu hình tùy chọn tự động cập nhật bảng -->
+            <!-- Cấu hình tạo/cập nhật bảng tự động của EclipseLink -->
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
+            <property name="eclipselink.logging.level" value="INFO"/>
         </properties>
     </persistence-unit>
 </persistence>

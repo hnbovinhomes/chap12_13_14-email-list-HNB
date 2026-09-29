@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 
@@ -57,23 +56,23 @@ public class EmailListServlet extends HttpServlet {
             else {
                 message = "";
 
-                // 3. Lưu thông tin người dùng vào PostgreSQL
+                // 3. Lưu thông tin người dùng vào PostgreSQL trên Render
                 UserDB.insert(user);
 
-                // 4. Gửi email xác nhận tự động qua Brevo HTTP API (MailUtilRender)
+                // 4. Gửi email xác nhận tự động bằng HTTP API (lách luật chống chặn port SMTP của Render)
                 try {
                     String subject = "Xác nhận đăng ký nhận tin thành công";
                     String body = "Xin chào " + user.getFirstName() + " " + user.getLastName() + ",\n\n"
                             + "Cảm ơn bạn đã đăng ký tham gia danh sách email của chúng tôi!\n"
-                            + "Thông tin đăng ký của bạn đã được ghi nhận trên hệ thống.\n\n"
+                            + "Thông tin đăng ký của bạn đã được ghi nhận thành công trên hệ thống.\n\n"
                             + "Trân trọng,\nEmail List Team";
 
-                    // Gọi hàm gửi mail HTTP API
+                    // Gọi hàm gửi mail qua Brevo REST API (Thay "email_da_verify_tren_brevo@gmail.com" bằng email đã xác thực trên tài khoản Brevo của bạn)
                     MailUtilRender.sendMail(user.getEmail(), "baooha9600@gmail.com", subject, body, false);
 
                 } catch (Exception e) {
-                    // In lỗi ra log console nếu gửi mail gặp sự cố
-                    System.err.println("Lỗi khi gửi email: " + e.getMessage());
+                    // In lỗi ra log console nếu việc gửi email gặp sự cố
+                    System.err.println("Lỗi khi gửi email qua HTTP API: " + e.getMessage());
                     e.printStackTrace();
                 }
 
@@ -84,7 +83,7 @@ public class EmailListServlet extends HttpServlet {
             request.setAttribute("message", message);
         }
 
-        // Chuyển hướng render view tương ứng
+        // Chuyển hướng view tương ứng
         getServletContext()
                 .getRequestDispatcher(url)
                 .forward(request, response);
