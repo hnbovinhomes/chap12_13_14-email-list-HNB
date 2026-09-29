@@ -15,9 +15,7 @@
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 
             <!-- JDBC URL đã thêm tham số ?sslmode=require để qua được tường lửa public của Railway -->
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://altaria.proxy.rlwy.net:41964/railway?sslmode=require&amp;connectTimeout=30"/>            <!-- Username -->
-            <property name="jakarta.persistence.jdbc.user" value="postgres"/>
-
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://db_host:5432/db_name?currentSchema=public&amp;TimeZone=Asia/Ho_Chi_Minh"/>
             <!-- Password -->
             <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHkLGKtGTCZrzgUznmlkzqm"/>
 

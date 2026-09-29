@@ -11,7 +11,7 @@ import java.io.IOException;
 
 import murach.business.User;
 import murach.db.UserDB;
-import murach.util.MailUtil;
+import murach.util.MailUtilRender;
 
 @WebServlet("/emailList")
 public class EmailListServlet extends HttpServlet {
@@ -60,7 +60,7 @@ public class EmailListServlet extends HttpServlet {
                 // 3. Lưu thông tin người dùng vào PostgreSQL
                 UserDB.insert(user);
 
-                // 4. Gửi email xác nhận tự động cho người dùng
+                // 4. Gửi email xác nhận tự động qua Brevo HTTP API (MailUtilRender)
                 try {
                     String subject = "Xác nhận đăng ký nhận tin thành công";
                     String body = "Xin chào " + user.getFirstName() + " " + user.getLastName() + ",\n\n"
@@ -68,8 +68,11 @@ public class EmailListServlet extends HttpServlet {
                             + "Thông tin đăng ký của bạn đã được ghi nhận trên hệ thống.\n\n"
                             + "Trân trọng,\nEmail List Team";
 
-                    MailUtil.sendMail(user.getEmail(), "baooha9600@gmail.com", subject, body, false);                } catch (Exception e) {
-                    // In lỗi ra log console nếu gửi mail gặp sự cố (như sai App Password)
+                    // Gọi hàm gửi mail HTTP API
+                    MailUtilRender.sendMail(user.getEmail(), "baooha9600@gmail.com", subject, body, false);
+
+                } catch (Exception e) {
+                    // In lỗi ra log console nếu gửi mail gặp sự cố
                     System.err.println("Lỗi khi gửi email: " + e.getMessage());
                     e.printStackTrace();
                 }
