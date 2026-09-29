@@ -9,15 +9,15 @@
         <class>murach.business.User</class>
 
         <properties>
-            <!-- Kết nối PostgreSQL trên Railway -->
+            <!-- Driver PostgreSQL -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver" />
 
-            <!-- Thay HOST, PORT, PASSWORD lấy từ tab Variables của Railway -->
-            <property name="jakarta.persistence.jdbc.url" value="postgres.railway.internal" />
+            <!-- Kết nối nội bộ Railway Postgres -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://postgres.railway.internal:5432/railway" />
             <property name="jakarta.persistence.jdbc.user" value="postgres" />
-            <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHkLGKtGTCZrzgUznmlkzqm" />
+            <property name="jakarta.persistence.jdbc.password" value="rkbpouPmEeHkLKGtGTCZrzgUznmlkzqm" />
 
-            <!-- Tự động tạo bảng User trong DB Railway nếu chưa có -->
+            <!-- Tự động tạo bảng User trong database -->
             <property name="jakarta.persistence.schema-generation.database.action" value="create" />
 
             <!-- EclipseLink Logging -->
