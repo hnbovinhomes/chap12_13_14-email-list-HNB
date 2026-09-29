@@ -14,10 +14,11 @@
             <!-- Driver kết nối PostgreSQL -->
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
 
-            <!-- THAY THẾ 4 THÔNG TIN DƯỚI ĐÂY BẰNG THÔNG TIN THẬT TỪ RENDER DASHBOARD -->
-            <property name="jakarta.persistence.jdbc.url" value="dpg-datn0f3ncjis7398nfcg-a"/>
+            <!-- URL đã được thêm đầy đủ tiền tố jdbc:postgresql:// và host của Render -->
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://dpg-datn0f3ncjis7398nfcg-a.oregon-postgres.render.com:5432/murachdb_h5ye?currentSchema=public&amp;TimeZone=Asia/Ho_Chi_Minh"/>
             <property name="jakarta.persistence.jdbc.user" value="murachdb_h5ye_user"/>
-            <property name="jakarta.persistence.jdbc.password" value="murachdb_h5ye"/>
+            <!-- Thay chuỗi bên dưới bằng Password thật copy từ mục Connections của email-list-db trên Render -->
+            <property name="jakarta.persistence.jdbc.password" value="acMnPcyR9lORQADfUixQrsZ0qumo8i1u"/>
 
             <!-- Cấu hình EclipseLink tự động tạo/cập nhật bảng -->
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>
